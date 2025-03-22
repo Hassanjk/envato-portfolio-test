@@ -127,7 +127,7 @@ export const EducationDetailsSection = (): JSX.Element => {
                   <Separator className="mt-[34px] bg-[#fde3a7]" />
                 </div>
 
-                <Button className="bg-[#9c4a37] hover:bg-[#9c4a37]/90 rounded-none px-[34px] py-[13px] h-auto">
+                <Button className="bg-[#9c4a37] hover:bg-[#9c4a37]/90 rounded-none px-[34px] py-[13px] h-auto transition-all duration-500 ease-in-out">
                   <span className="[font-family:'Neue_Montreal-Regular',Helvetica] font-normal text-[#fde3a7] text-xs tracking-[0.60px] leading-3">
                     SUBMIT
                   </span>
@@ -138,7 +138,7 @@ export const EducationDetailsSection = (): JSX.Element => {
         </div>
       </div>
 
-      <Button className="absolute top-[-1171px] left-0 bg-[#9c4a37] hover:bg-[#9c4a37]/90 rounded-none px-[34px] py-[13px] h-auto">
+      <Button className="absolute top-[-1171px] left-0 bg-[#9c4a37] hover:bg-[#9c4a37]/90 rounded-none px-[34px] py-[13px] h-auto transition-all duration-500 ease-in-out md:hidden">
         <span className="[font-family:'Neue_Montreal-Regular',Helvetica] font-normal text-[#fde3a7] text-xs tracking-[0.60px] leading-3">
           DOWNLOAD RESUME
         </span>

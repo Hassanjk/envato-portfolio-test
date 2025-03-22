@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.content--sticky {
+  width: 100vw;
+  position: sticky;
+  --offset: 0px;
+  top: var(--offset);
+  height: calc(100vh - var(--offset));
+}
+
+.bg-1 { background: #2f251e; }
+.bg-2 { background: #43392f; }
+
+.wrap {
+  position: relative;
+  z-index: 1;
+}
+
+i {
+  font-style: normal;
+  font-variation-settings: "slnt" 0, "wdth" 100, "wght" 400, "INKT" 400;
+}
+
+@media screen and (min-width: 768px) {
+  .content--half {
+    width: 50%;
+  }
+}
+
+body.loading {
+  overflow: hidden;
+}
