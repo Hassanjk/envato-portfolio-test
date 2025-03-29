@@ -3,9 +3,10 @@ import { EducationDetailsSection } from "./sections/EducationDetailsSection/Educ
 import { EducationSection } from "./sections/EducationSection";
 import { HeaderSection } from "./sections/HeaderSection/HeaderSection";
 import { HeroSection } from "./sections/HeroSection/HeroSection";
-import { MainContentSection } from "./sections/MainContentSection/MainContentSection";
 import { ProjectsSection } from "./sections/ProjectsSection/ProjectsSection";
 import { TestimonialsSection } from "./sections/TestimonialsSection";
+import { ContactSection } from "./sections/ContactSection";
+import { Footer } from "./sections/Footer";
 
 export const Frame = (): JSX.Element => {
   return (
@@ -16,8 +17,8 @@ export const Frame = (): JSX.Element => {
         <EducationSection />
         <ProjectsSection />
         <TestimonialsSection />
-        <MainContentSection />
-        <EducationDetailsSection />
+        <ContactSection />
+        <Footer />
       </div>
     </main>
   );
