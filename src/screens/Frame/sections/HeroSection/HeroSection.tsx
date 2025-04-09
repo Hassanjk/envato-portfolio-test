@@ -23,7 +23,7 @@ export const HeroSection = (): JSX.Element => {
 
           <div className="relative w-[539px] h-[674px] mt-[42px] ml-[91px]">
             <img 
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80" 
+              src="/assets/img/profile.png" 
               alt="Profile"
               className="w-full h-full object-cover"
             />
