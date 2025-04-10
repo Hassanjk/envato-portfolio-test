@@ -16,14 +16,14 @@ export const HeroSection = (): JSX.Element => {
           <div className="absolute w-[375px] h-[375px] top-0 left-0 grid grid-cols-[repeat(25,1fr)] grid-rows-[repeat(25,1fr)]">
             {Array(625).fill(0).map((_, i) => (
               <div key={i} className="relative">
-                <div className="absolute w-[7px] h-[7px] bg-[#FDE3A7]/20" />
+                <div className="absolute w-[7px] h-[7px] bg-[#FDE3A7]/0" />
               </div>
             ))}
           </div>
 
           <div className="relative w-[539px] h-[674px] mt-[42px] ml-[91px]">
             <img 
-              src="/assets/img/bg.jpeg" 
+              src="/assets/img/bg.jpg" 
               alt="Profile"
               className="w-full h-full object-cover"
             />
