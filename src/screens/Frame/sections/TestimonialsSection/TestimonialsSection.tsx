@@ -166,7 +166,7 @@ export const TestimonialsSection = (): JSX.Element => {
             TESTIMONIALS
           </span>
           <h2 className="mt-[29px] text-[#FDE3A7] text-[60px] leading-[60px] max-w-[770px]">
-            Creative & dedicated is things that gilber studio brings for your business
+            Creative & dedicated 
           </h2>
         </div>
 
