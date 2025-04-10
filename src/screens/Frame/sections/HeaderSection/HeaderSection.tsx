@@ -14,7 +14,7 @@ export const HeaderSection = (): JSX.Element => {
     <section 
       className="relative w-full h-screen bg-cover bg-center" 
       style={{ 
-        backgroundImage: "url('https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&q=80')"
+        backgroundImage: "url('/assets/img/bg.png')"
       }}
     >
       <div className="absolute inset-0 bg-black/80" />
