@@ -12,12 +12,13 @@ export const HeaderSection = (): JSX.Element => {
 
   return (
     <section 
-      className="relative w-full h-screen bg-cover bg-center" 
+      className="relative w-full h-screen bg-cover" 
       style={{ 
-        backgroundImage: "url('/assets/img/bg.png')"
+        backgroundImage: "url('/assets/img/bg.png')",
+        backgroundPosition: "center 30%" 
       }}
     >
-      <div className="absolute inset-0 bg-black/80" />
+      <div className="absolute inset-0 bg-black/50" />
       
       {/* Main container */}
       <div className="relative z-10 h-full max-w-[1440px] mx-auto px-8">
