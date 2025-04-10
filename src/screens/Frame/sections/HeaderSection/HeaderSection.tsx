@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "../../../../components/ui/button";
 
+// Enhanced animation variants
 const fadeInUp = {
   initial: {
     y: 60,
@@ -11,8 +12,8 @@ const fadeInUp = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.6,
-      ease: [0.6, -0.05, 0.01, 0.99],
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };
@@ -20,9 +21,46 @@ const fadeInUp = {
 const staggerNav = {
   animate: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.3,
     },
   },
+};
+
+// New reveal animations for hero content
+const textReveal = {
+  initial: { 
+    opacity: 0,
+    y: 100,
+    filter: "blur(8px)"
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 1,
+      ease: [0.25, 0.1, 0.25, 1],
+    }
+  }
+};
+
+const buttonReveal = {
+  initial: { 
+    scale: 0,
+    rotate: -45,
+    opacity: 0 
+  },
+  animate: {
+    scale: 1,
+    rotate: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.34, 1.56, 0.64, 1],
+      delay: 0.6
+    }
+  }
 };
 
 export const HeaderSection = (): JSX.Element => {
@@ -46,7 +84,7 @@ export const HeaderSection = (): JSX.Element => {
         className="absolute inset-0 bg-black/50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.2, delay: 0.3 }}
       />
       
       <div className="relative z-10 h-full max-w-[1440px] mx-auto px-8">
@@ -127,13 +165,16 @@ export const HeaderSection = (): JSX.Element => {
             <div className="flex items-center">
               <motion.h1 
                 className="text-[#FDE3A7] text-[140px] leading-[133px] font-normal mb-16"
-                variants={fadeInUp}
+                variants={textReveal}
               >
                 Sam<br />Bailey
               </motion.h1>
               <motion.div
-                variants={fadeInUp}
-                whileHover={{ scale: 1.1 }}
+                variants={buttonReveal}
+                whileHover={{ 
+                  scale: 1.1, 
+                  boxShadow: "0 0 25px rgba(156, 74, 55, 0.5)" 
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
@@ -147,7 +188,8 @@ export const HeaderSection = (): JSX.Element => {
 
             <motion.p 
               className="text-[#FDE3A7] text-[25px] leading-[32.5px] font-normal"
-              variants={fadeInUp}
+              variants={textReveal}
+              transition={{ delay: 0.4 }}
             >
               Hello, my name is Sam Luise,<br />
               i'm designer
@@ -159,7 +201,7 @@ export const HeaderSection = (): JSX.Element => {
           className="absolute bottom-8 w-[calc(100%-4rem)] flex justify-between items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
         >
           <motion.img 
             src="/arrow.svg" 
