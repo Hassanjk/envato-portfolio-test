@@ -76,12 +76,12 @@ export const ProjectsSection = (): JSX.Element => {
         }, 0)
         .fromTo(el.querySelector('.project-image'), {
           yPercent: 20,
-          rotation: 40,
-          scale: 0.8,
-          filter: 'contrast(400%)'
+          rotation: 0, // Changed from 40 to 0 to keep images straight
+          scale: 1,    // Changed from 0.8 to 1 for full size
+          filter: 'contrast(200%)' // Reduced contrast for better visibility
         }, {
           ease: 'none',
-          yPercent: -100,
+          yPercent: -20, // Adjusted from -100 to -20 for smoother movement
           rotation: 0,
           scale: 1,
           filter: 'contrast(100%)',
@@ -135,11 +135,11 @@ export const ProjectsSection = (): JSX.Element => {
                 <i className="font-normal">The</i> {project.name}
               </h2>
               
-              <div className="project-image relative w-full h-[50vh] md:h-[674px] group overflow-hidden">
+              <div className="project-image relative w-full h-[400px] md:h-[600px] overflow-hidden rounded-md">
                 <img 
                   src={project.image}
                   alt={project.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 <Button
                   variant="outline"
