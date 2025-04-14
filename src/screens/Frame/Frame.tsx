@@ -9,6 +9,7 @@ import { ContactSection } from "./sections/ContactSection";
 import { Footer } from "./sections/Footer";
 import { Loader } from "../../components/Loader";
 import { preloadImages } from "../../utils";
+import Lenis from "@studio-freight/lenis";
 
 // Enhanced animation variants
 const fadeInUp = {
@@ -85,6 +86,42 @@ export const Frame = (): JSX.Element => {
   const [animationsReady, setAnimationsReady] = useState(false);
 
   useEffect(() => {
+    // Initialize Lenis for smooth scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // Integrate with RAF for smooth animation loop
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Add scroll listener for anchor navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId) {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            lenis.scrollTo(targetElement, {
+              offset: 0,
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+          }
+        }
+      });
+    });
+
     // Preload all images before removing the loader
     preloadImages('img, [style*="background-image"]').then(() => {
       // Add a small delay to ensure smooth transition
@@ -94,6 +131,11 @@ export const Frame = (): JSX.Element => {
         setTimeout(() => setAnimationsReady(true), 800);
       }, 2000); // Match this with the loader animation duration
     });
+
+    return () => {
+      lenis.destroy();
+      // Additional cleanup if needed
+    };
   }, []);
 
   return (
@@ -112,27 +154,27 @@ export const Frame = (): JSX.Element => {
           variants={fadeIn}
           className="bg-[#0e0e0e] w-full max-w-[1920px]"
         >
-          <motion.div variants={scaleUp}>
+          <motion.div variants={scaleUp} id="home">
             <HeaderSection />
           </motion.div>
           
-          <motion.div custom={0} variants={sectionVariants}>
+          <motion.div custom={0} variants={sectionVariants} id="about">
             <HeroSection />
           </motion.div>
           
-          <motion.div custom={1} variants={sectionVariants}>
+          <motion.div custom={1} variants={sectionVariants} id="education">
             <EducationSection />
           </motion.div>
           
-          <motion.div custom={2} variants={sectionVariants}>
+          <motion.div custom={2} variants={sectionVariants} id="projects">
             <ProjectsSection />
           </motion.div>
           
-          <motion.div custom={3} variants={sectionVariants}>
+          <motion.div custom={3} variants={sectionVariants} id="testimonials">
             <TestimonialsSection />
           </motion.div>
           
-          <motion.div custom={4} variants={sectionVariants}>
+          <motion.div custom={4} variants={sectionVariants} id="contact">
             <ContactSection />
           </motion.div>
           

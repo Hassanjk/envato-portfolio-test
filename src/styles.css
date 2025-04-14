@@ -22,6 +22,11 @@ html.lenis {
   pointer-events: none;
 }
 
+/* Add scroll margin for targets to account for fixed header */
+[id] {
+  scroll-margin-top: 80px;
+}
+
 .content--sticky {
   width: 100vw;
   position: sticky;

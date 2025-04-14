@@ -65,11 +65,11 @@ const buttonReveal = {
 
 export const HeaderSection = (): JSX.Element => {
   const navItems = [
-    { label: "HOME", href: "#" },
-    { label: "PAGES", href: "#" },
-    { label: "BLOG", href: "#" },
-    { label: "CONTACT", href: "#" },
-    { label: "PORTFOLIO", href: "#" },
+    { label: "HOME", href: "#home" },
+    { label: "ABOUT", href: "#about" },
+    { label: "EDUCATION", href: "#education" },
+    { label: "PROJECTS", href: "#projects" },
+    { label: "CONTACT", href: "#contact" },
   ];
 
   return (
@@ -95,7 +95,7 @@ export const HeaderSection = (): JSX.Element => {
           animate="animate"
         >
           <motion.a 
-            href="#" 
+            href="#home" 
             className="text-[#FDE3A7] text-2xl"
             variants={fadeInUp}
           >

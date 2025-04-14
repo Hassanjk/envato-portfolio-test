@@ -10,11 +10,11 @@ export const Footer = (): JSX.Element => {
   ];
 
   const quickLinks = [
-    "About Us",
-    "Services",
-    "Projects",
-    "Blog",
-    "Contact",
+    { name: "About Us", href: "#about" },
+    { name: "Education", href: "#education" },
+    { name: "Projects", href: "#projects" },
+    { name: "Testimonials", href: "#testimonials" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -52,12 +52,12 @@ export const Footer = (): JSX.Element => {
             <h4 className="text-[#fde3a7] text-lg font-medium mb-6">Quick Links</h4>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
-                <li key={link}>
+                <li key={link.name}>
                   <a 
-                    href="#" 
+                    href={link.href} 
                     className="text-[#fde3a7]/70 hover:text-[#fde3a7] transition-colors"
                   >
-                    {link}
+                    {link.name}
                   </a>
                 </li>
               ))}
