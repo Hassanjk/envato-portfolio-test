@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button } from "../../../../components/ui/button";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, XIcon } from "lucide-react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "@studio-freight/lenis";
@@ -9,24 +9,68 @@ import { preloadImages } from "../../../../utils";
 gsap.registerPlugin(ScrollTrigger);
 
 export const ProjectsSection = (): JSX.Element => {
+  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
+  const [cursorHovered, setCursorHovered] = useState(false);
+  const [sliderOpen, setSliderOpen] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
+
   const projects = [
     {
       name: "A cup of coffee",
-      image: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&q=80"
+      image: "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&q=80",
+      description: "An exploration of the rich coffee culture and its influence on modern society. This project delves into the artisanal coffee-making process.",
+      tags: ["Photography", "Lifestyle", "Food & Beverage"],
+      year: "2023"
     },
     {
       name: "Exoape",
-      image: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945?auto=format&fit=crop&q=80"
+      image: "https://images.unsplash.com/photo-1504270997636-07ddfbd48945?auto=format&fit=crop&q=80",
+      description: "A digital product design studio website focused on innovative experiences for forward-thinking brands and startups.",
+      tags: ["Web Design", "Branding", "UX/UI"],
+      year: "2022"
     },
     {
       name: "Gaming",
-      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80"
+      image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80",
+      description: "An immersive gaming platform that redefines interactive entertainment through cutting-edge graphics and responsive design.",
+      tags: ["Game Design", "3D", "Interactive"],
+      year: "2023"
     },
     {
       name: "Balenciaga",
-      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80"
+      image: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80",
+      description: "A fashion-forward concept exploring the intersection of luxury and street style, inspired by Balenciaga's bold aesthetic.",
+      tags: ["Fashion", "Photography", "Editorial"],
+      year: "2021"
     }
   ];
+
+  // Mouse tracking for custom cursor
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  // Animate cursor
+  useEffect(() => {
+    if (cursorRef.current) {
+      gsap.to(cursorRef.current, {
+        x: mousePos.x,
+        y: mousePos.y,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
+  }, [mousePos]);
 
   useEffect(() => {
     let lenis: Lenis;
@@ -76,12 +120,12 @@ export const ProjectsSection = (): JSX.Element => {
         }, 0)
         .fromTo(el.querySelector('.project-image'), {
           yPercent: 20,
-          rotation: 0, // Changed from 40 to 0 to keep images straight
-          scale: 1,    // Changed from 0.8 to 1 for full size
-          filter: 'contrast(200%)' // Reduced contrast for better visibility
+          rotation: 0,
+          scale: 1,
+          filter: 'contrast(200%)'
         }, {
           ease: 'none',
-          yPercent: -20, // Adjusted from -100 to -20 for smoother movement
+          yPercent: -20,
           rotation: 0,
           scale: 1,
           filter: 'contrast(100%)',
@@ -114,14 +158,66 @@ export const ProjectsSection = (): JSX.Element => {
     };
   }, []);
 
+  // Animation for project detail slider
+  useEffect(() => {
+    if (activeProject !== null && sliderRef.current) {
+      // Open the slider
+      setSliderOpen(true);
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      
+      gsap.fromTo(sliderRef.current,
+        { x: '-100%' },
+        { 
+          x: '0%', 
+          duration: 0.6, 
+          ease: "power3.out"
+        }
+      );
+    }
+  }, [activeProject]);
+
+  // Close the project detail slider
+  const closeProjectDetail = () => {
+    if (sliderRef.current) {
+      gsap.to(sliderRef.current, {
+        x: '-100%',
+        duration: 0.5,
+        ease: "power2.in",
+        onComplete: () => {
+          setActiveProject(null);
+          setSliderOpen(false);
+          document.body.style.overflow = ''; // Restore scrolling
+        }
+      });
+    }
+  };
+
+  const openProjectDetail = (index: number) => {
+    setActiveProject(index);
+  }
+
   return (
     <section className="relative w-full min-h-screen bg-[#0E0E0E]">
+      {/* Custom cursor */}
+      <div 
+        ref={cursorRef}
+        className={`fixed w-16 h-16 rounded-full pointer-events-none z-50 transition-all duration-200 flex items-center justify-center ${
+          cursorHovered ? 'bg-[#FDE3A7] scale-100' : 'bg-transparent border border-[#FDE3A7] scale-0'
+        }`}
+        style={{ 
+          transform: `translate(${mousePos.x - 32}px, ${mousePos.y - 32}px)`,
+        }}
+      >
+        <ArrowRightIcon className={`w-6 h-6 ${cursorHovered ? 'text-[#0E0E0E]' : 'text-[#FDE3A7]'}`} />
+      </div>
+
       <div className="max-w-[1440px] mx-auto px-4 md:px-8">
         <span className="text-[#9C4A37] text-[15px] tracking-[1.12px] uppercase block pt-20">
           LATEST PROJECTS
         </span>
 
-        <div className="wrap">
+        {/* Projects List */}
+        <div className="wrap" ref={projectsRef}>
           {projects.map((project, index) => (
             <div 
               key={project.name} 
@@ -129,7 +225,10 @@ export const ProjectsSection = (): JSX.Element => {
                 index % 2 === 0 ? 'bg-1' : 'bg-2'
               } relative w-full md:w-1/2 ${
                 index % 2 === 0 ? 'ml-0' : 'ml-auto'
-              } min-h-screen flex flex-col justify-center px-4 md:px-8`}
+              } min-h-screen flex flex-col justify-center px-4 md:px-8 group cursor-pointer`}
+              onClick={() => openProjectDetail(index)}
+              onMouseEnter={() => setCursorHovered(true)}
+              onMouseLeave={() => setCursorHovered(false)}
             >
               <h2 className="text-[#FDE3A7] text-[60px] leading-[60px] mb-8 font-normal">
                 <i className="font-normal">The</i> {project.name}
@@ -141,17 +240,104 @@ export const ProjectsSection = (): JSX.Element => {
                   alt={project.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[81px] h-[81px] rounded-full border border-[#FDE3A7] bg-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <ArrowRightIcon className="w-6 h-6 text-[#FDE3A7]" />
-                </Button>
               </div>
             </div>
           ))}
         </div>
+      </div>
+      
+      {/* Project Detail Slider */}
+      <div 
+        ref={sliderRef} 
+        className={`fixed top-0 left-0 w-full h-full bg-[#121212] z-[100] overflow-y-auto transform translate-x-[-100%]`}
+      >
+        {activeProject !== null && (
+          <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-10">
+            <div className="flex justify-between items-center mb-12">
+              <h1 className="text-[#FDE3A7] text-[80px] leading-tight font-normal">
+                <i className="font-normal">The</i> {projects[activeProject].name}
+              </h1>
+              <Button
+                variant="outline"
+                size="icon"
+                className="w-12 h-12 rounded-full border border-[#FDE3A7] bg-transparent"
+                onClick={closeProjectDetail}
+              >
+                <XIcon className="w-5 h-5 text-[#FDE3A7]" />
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+              <div className="project-hero-image h-[70vh] overflow-hidden rounded-lg">
+                <img 
+                  src={projects[activeProject].image}
+                  alt={projects[activeProject].name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col">
+                <div className="p-8 bg-[#1A1A1A] rounded-lg mb-8">
+                  <h3 className="text-[#FDE3A7] text-2xl mb-4">Project Overview</h3>
+                  <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                    {projects[activeProject].description}
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-6 mt-12">
+                    <div>
+                      <h4 className="text-[#9C4A37] text-sm uppercase mb-2">Year</h4>
+                      <p className="text-white">{projects[activeProject].year}</p>
+                    </div>
+                    <div>
+                      <h4 className="text-[#9C4A37] text-sm uppercase mb-2">Services</h4>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {projects[activeProject].tags.map(tag => (
+                          <span key={tag} className="px-3 py-1 text-xs rounded-full border border-[#FDE3A7] text-[#FDE3A7]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <Button 
+                  className="mt-auto bg-[#9C4A37] hover:bg-[#8a3f2f] text-white px-8 py-6 h-auto rounded-md"
+                >
+                  View Full Case Study
+                  <ArrowRightIcon className="ml-2 w-5 h-5" />
+                </Button>
+              </div>
+            </div>
+            
+            <div className="my-16">
+              <h3 className="text-[#FDE3A7] text-3xl mb-8">Related Projects</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {projects.filter((_, i) => i !== activeProject).slice(0, 3).map((project, index) => (
+                  <div 
+                    key={project.name} 
+                    className="group cursor-pointer rounded-lg overflow-hidden"
+                    onClick={() => {
+                      // Calculate correct index accounting for filtered projects
+                      const targetIndex = projects.findIndex(p => p.name === project.name);
+                      openProjectDetail(targetIndex);
+                    }}
+                  >
+                    <div className="h-[300px] overflow-hidden">
+                      <img 
+                        src={project.image}
+                        alt={project.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <h4 className="text-white text-xl mt-4 group-hover:text-[#FDE3A7] transition-colors">
+                      {project.name}
+                    </h4>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

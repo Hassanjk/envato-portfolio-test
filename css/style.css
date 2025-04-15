@@ -1,0 +1,54 @@
+// ...existing code...
+
+/* Project Slider */
+.project-slider {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  transition: left 0.5s ease;
+  overflow-y: auto;
+}
+
+.project-slider.active {
+  left: 0;
+}
+
+.project-slider__inner {
+  width: 80%;
+  max-width: 1200px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 30px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.project-slider__close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+.project-slider__content {
+  padding: 20px 0;
+}
+
+.project-slider__content img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Prevent scrolling of background when slider is open */
+body.slider-open {
+  overflow: hidden;
+}

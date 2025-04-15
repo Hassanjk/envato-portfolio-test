@@ -90,21 +90,39 @@
     overflow-x: hidden;
   }
 
-  /* Custom scrollbar */
+  /* Hide default scrollbars completely */
   ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
+    display: none;
+    width: 0;
     background: transparent;
   }
-
-  ::-webkit-scrollbar-thumb {
-    background: #9C4A37;
-    border-radius: 4px;
-  }
-
+  
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-thumb,
   ::-webkit-scrollbar-thumb:hover {
-    background: #7a3a2c;
+    background: transparent;
+    width: 0;
+    display: none;
+  }
+  
+  /* Ensure consistent hiding across all browsers */
+  html, body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Ensure Lenis scrollbar settings are preserved */
+  html.lenis, 
+  html.lenis.lenis-smooth,
+  html.lenis.lenis-scrolling {
+    scrollbar-width: none;
+  }
+  
+  /* Hide any potential Lenis scrollbar */
+  .lenis-scrollbar {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    width: 0 !important;
   }
 }
